@@ -1,0 +1,56 @@
+
+public class GameMap : MonoBehaviour
+{
+    public static GameMap gameMap;
+
+    public GameObject[] tilePrefabs;
+    public GameObject floor;
+    public int columns = 100;
+    public int rows = 25;
+
+
+    void Start()
+    {
+        gameMap = this;
+        GenerateMap();
+
+        GenerateStartingRoom();
+
+        SpawnMap();
+    }
+    void GenerateStartingRoom()
+        {
+            for (int j = 0; j < rows; j++)
+            {
+                grid[i, j] = getRandomPrefab(i, j);
+            }
+        }
+    }
+
+    private GameObject getRandomPrefab(int i, int j)
+    {
+        return tilePrefabs[0];
+    }
+
+    private void SpawnTile(int i, int j, GameObject v)
+    {
+        GameObject tile = Instantiate(v, GridToWorldPosition(i, j), Quaternion.identity);
+
+        grid[i,j] = tile;
+
+        TileScript tileScript = tile.GetComponentInChildren<TileScript>();
+        if (tileScript != null)
+        {
+            tileScript.Setup(i, j);
+        }
+        else
+        {
+            tileScript.Setup(i, j);
+        }
+    }
+
+    private Vector3 GridToWorldPosition(int i, int j)
+    {
+        return new Vector3(i * tileSize, j * tileSize, 0);
+    }
+}
